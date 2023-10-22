@@ -3,7 +3,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import GalleryScreen from './Gallery/GalleryScreen';
-import FavoritesScreen from './Artwork/ArtworkScreen';
+import FavoritesScreen from './Favorites/FavoritesSreen';
 import Icon from 'react-native-vector-icons/AntDesign';
 const Tab = createBottomTabNavigator();
 

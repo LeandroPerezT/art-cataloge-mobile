@@ -2,7 +2,7 @@
 import { SafeAreaView, Text } from 'react-native';
 import React from 'react';
 
-const ArtworkScreen = () => {
+const FavoritesScreen = () => {
   return (
     <SafeAreaView>
       <Text>ArtworkScreen</Text>
@@ -10,4 +10,4 @@ const ArtworkScreen = () => {
   );
 };
 
-export default ArtworkScreen;
+export default FavoritesScreen;
