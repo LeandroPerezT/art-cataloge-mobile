@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
   Artwork,
+  ArtworkByIDResponse,
   ArtworkResponse,
   transformResponseToArtwork,
 } from './types/artworks.types';
@@ -17,7 +18,14 @@ export const artCatalogApi = createApi({
       },
       providesTags: ['Artwork'],
     }),
+    getArtworkById: builder.query<Artwork, number>({
+      query: id => `artworks/${id}`,
+      transformResponse: (response: ArtworkByIDResponse) => {
+        return transformResponseToArtwork(response.data);
+      },
+      providesTags: ['Artwork'],
+    }),
   }),
 });
 
-export const { useGetArtworksQuery } = artCatalogApi;
+export const { useGetArtworksQuery, useGetArtworkByIdQuery } = artCatalogApi;

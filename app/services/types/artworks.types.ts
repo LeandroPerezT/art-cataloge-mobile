@@ -28,38 +28,38 @@ export interface Config {
   website_url: string;
 }
 
-export interface Data {
+export type Data = {
   id: number;
   api_model: string;
   api_link: string;
   is_boosted: boolean;
   title: string;
-  alt_titles?: string;
+  alt_titles: string | null;
   thumbnail: Thumbnail;
   main_reference_number: string;
   has_not_been_viewed_much: boolean;
-  boost_rank?: null;
+  boost_rank: number | null;
   date_start: number;
   date_end: number;
   date_display: string;
   date_qualifier_title: string;
-  date_qualifier_id: number;
+  date_qualifier_id: number | null;
   artist_display: string;
   place_of_origin: string;
   description: string;
   dimensions: string;
   dimensions_detail: DimensionsDetail[];
   medium_display: string;
-  inscriptions?: number;
+  inscriptions: number | null;
   credit_line: string;
-  catalogue_display?: boolean;
-  publication_history: string;
-  exhibition_history: string;
-  provenance_text: string;
+  catalogue_display: boolean | null;
+  publication_history: string | null;
+  exhibition_history: string | null;
+  provenance_text: string | null;
   edition: null;
   publishing_verification_level: string;
   internal_department_id: number;
-  fiscal_year: null;
+  fiscal_year: number | null;
   fiscal_year_deaccession: null;
   is_public_domain: boolean;
   is_zoomable: boolean;
@@ -70,13 +70,13 @@ export interface Data {
   has_advanced_imaging: boolean;
   colorfulness: number;
   color: Color;
-  latitude: null;
-  longitude: null;
-  latlon: null;
+  latitude: number | null;
+  longitude: number | null;
+  latlon: string | null;
   is_on_view: boolean;
   on_loan_display: null;
-  gallery_title: null;
-  gallery_id: null;
+  gallery_title: string | null;
+  gallery_id: number | null;
   nomisma_id: null;
   artwork_type_title: string;
   artwork_type_id: number;
@@ -100,7 +100,7 @@ export interface Data {
   alt_classification_ids: string[];
   classification_ids: string[];
   classification_titles: string[];
-  subject_id: null;
+  subject_id: string | null;
   alt_subject_ids: string[];
   subject_ids: string[];
   subject_titles: string[];
@@ -108,17 +108,17 @@ export interface Data {
   alt_material_ids: any[];
   material_ids: string[];
   material_titles: string[];
-  technique_id: null;
+  technique_id: string | null;
   alt_technique_ids: any[];
-  technique_ids: any[];
-  technique_titles: any[];
+  technique_ids: string[];
+  technique_titles: string[];
   theme_titles: string[];
   image_id: string;
   alt_image_ids: any[];
-  document_ids: any[];
+  document_ids: string[];
   sound_ids: any[];
   video_ids: any[];
-  text_ids: any[];
+  text_ids: string[];
   section_ids: any[];
   section_titles: any[];
   site_ids: any[];
@@ -126,7 +126,7 @@ export interface Data {
   source_updated_at: Date;
   updated_at: Date;
   timestamp: Date;
-}
+};
 
 export interface Color {
   h: number;
@@ -179,6 +179,12 @@ export interface Pagination {
   current_page: number;
   next_url: string;
 }
+
+export type ArtworkByIDResponse = {
+  data: Data;
+  info: Info;
+  config: Config;
+};
 
 export const transformResponseToArtwork = (response: Data): Artwork => {
   return {

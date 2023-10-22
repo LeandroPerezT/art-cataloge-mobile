@@ -7,12 +7,10 @@ import MyTabs from './app/screens/MainNavigator';
 function App(): JSX.Element {
   return (
     <Provider store={store}>
-
       <NavigationContainer>
         <MyTabs />
       </NavigationContainer>
     </Provider>
-
   );
 }
 

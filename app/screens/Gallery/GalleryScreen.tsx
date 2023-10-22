@@ -5,17 +5,22 @@ import {
   Dimensions,
   View,
   FlatList,
+  Pressable,
 } from 'react-native';
 import React from 'react';
 import { Artwork } from '../../services/types/artworks.types';
 import { useGetArtworksQuery } from '../../services/artCatalog';
-
 import ProgressiveImage from '../components/ProgresiveImage';
+import ArtSkeleton from './components/ArtSkeleton';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { GalleryStackParams } from './GalleryStack';
 
-const GalleryScreen = () => {
+type GalleryScreenProps = NativeStackScreenProps<GalleryStackParams, 'Gallery'>;
+
+const GalleryScreen = ({ navigation }: GalleryScreenProps) => {
   const { data: artworks, isLoading, isError, error } = useGetArtworksQuery();
   if (isLoading) {
-    return <Text>Loading...</Text>;
+    return <ArtSkeleton quantity={5} />;
   }
   if (isError) {
     return <Text>{JSON.stringify(error)}</Text>;
@@ -25,23 +30,37 @@ const GalleryScreen = () => {
     <SafeAreaView style={styles.container}>
       <FlatList
         data={artworks}
-        renderItem={({ item }) => <ArtworkCard {...item} />}
+        renderItem={({ item }) => (
+          <ArtworkCard {...item} navigation={navigation} />
+        )}
         keyExtractor={item => item.title}
       />
     </SafeAreaView>
   );
 };
 
-const ArtworkCard = (props: Artwork) => {
+type ArtworkCardProps = Artwork & {
+  navigation: GalleryScreenProps['navigation'];
+};
+
+const ArtworkCard = (props: ArtworkCardProps) => {
+  const { navigation } = props;
   return (
     <View style={styles.card}>
-      <ProgressiveImage
-        lowResUrl={props.thumbnail.lqip}
-        highResUrl={`https://www.artic.edu/iiif/2/${props.image_id}/full/1686,/0/default.jpg`}
-        style={styles.thumbnail}
-      />
-      <Text style={styles.title}>{props.title}</Text>
-      <Text style={styles.author}>{props.artist_display}</Text>
+      <Pressable
+        onPress={() =>
+          navigation.navigate('Artwork', {
+            artworkId: props.id,
+          })
+        }>
+        <ProgressiveImage
+          lowResUrl={props.thumbnail.lqip}
+          highResUrl={`https://www.artic.edu/iiif/2/${props.image_id}/full/1686,/0/default.jpg`}
+          style={styles.thumbnail}
+        />
+        <Text style={styles.title}>{props.title}</Text>
+        <Text style={styles.author}>{props.artist_display}</Text>
+      </Pressable>
     </View>
   );
 };

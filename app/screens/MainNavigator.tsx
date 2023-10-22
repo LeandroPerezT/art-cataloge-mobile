@@ -1,10 +1,18 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import GalleryScreen from './Gallery/GalleryScreen';
 import FavoritesScreen from './Favorites/FavoritesSreen';
 import Icon from 'react-native-vector-icons/AntDesign';
-const Tab = createBottomTabNavigator();
+import { NavigatorScreenParams } from '@react-navigation/native';
+import { GalleryStackParams } from './Gallery/GalleryStack';
+import GalleryStack from './Gallery/GalleryStack';
+
+export type TabParams = {
+  Gallery: NavigatorScreenParams<GalleryStackParams>;
+  Favorites: undefined;
+};
+
+const Tab = createBottomTabNavigator<TabParams>();
 
 export default function MyTabs() {
   return (
@@ -20,7 +28,7 @@ export default function MyTabs() {
             ),
         }}
         name="Gallery"
-        component={GalleryScreen}
+        component={GalleryStack}
       />
       <Tab.Screen
         name="Favorites"
