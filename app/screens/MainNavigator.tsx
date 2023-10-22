@@ -8,7 +8,7 @@ import { GalleryStackParams } from './Gallery/GalleryStack';
 import GalleryStack from './Gallery/GalleryStack';
 
 export type TabParams = {
-  Gallery: NavigatorScreenParams<GalleryStackParams>;
+  GalleryStack: NavigatorScreenParams<GalleryStackParams>;
   Favorites: undefined;
 };
 
@@ -27,7 +27,7 @@ export default function MyTabs() {
               <Icon name="picture" size={size} />
             ),
         }}
-        name="Gallery"
+        name="GalleryStack"
         component={GalleryStack}
       />
       <Tab.Screen

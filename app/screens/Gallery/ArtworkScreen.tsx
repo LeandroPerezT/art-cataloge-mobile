@@ -4,9 +4,13 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GalleryStackParams } from './GalleryStack';
 import { useGetArtworkByIdQuery } from '../../services/artCatalog';
 import { composeImageUrl } from '../../utils/utils';
+import RenderHtml from 'react-native-render-html';
+import { useWindowDimensions } from 'react-native';
+
 type ArtworkScreenProps = NativeStackScreenProps<GalleryStackParams, 'Artwork'>;
 
 const ArtworkScreen = ({ route }: ArtworkScreenProps) => {
+  const { width } = useWindowDimensions();
   const {
     data: artwork,
     isLoading,
@@ -18,13 +22,13 @@ const ArtworkScreen = ({ route }: ArtworkScreenProps) => {
     return <Text>Loading...</Text>;
   }
 
-  if (isError) {
+  if (isError || !artwork) {
     return <Text>{JSON.stringify(error)}</Text>;
   }
 
-  if (artwork) {
-    console.log({ artwork });
-  }
+  const source = {
+    html: artwork.description,
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -36,11 +40,11 @@ const ArtworkScreen = ({ route }: ArtworkScreenProps) => {
       <View style={styles.detailsContainer}>
         <Text style={styles.title}>{artwork?.title}</Text>
         <Text style={styles.artist}>{artwork?.artist_display}</Text>
-        <Text style={styles.description}>
-          {artwork?.description
-            ? artwork.description
-            : 'Sorry, this piece does not have a description available'}
-        </Text>
+        {artwork?.description ? (
+          <RenderHtml contentWidth={width} source={source} />
+        ) : (
+          <Text>Sorry, the piece does not have a description available...</Text>
+        )}
       </View>
     </ScrollView>
   );
