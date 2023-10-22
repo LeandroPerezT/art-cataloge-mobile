@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { artCatalogApi } from './services/artCatalog';
@@ -7,7 +6,7 @@ export const store = configureStore({
   reducer: {
     [artCatalogApi.reducerPath]: artCatalogApi.reducer,
   },
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(artCatalogApi.middleware),
 });
 

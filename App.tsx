@@ -1,6 +1,4 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
-
 import { store } from './app/store';
 import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';

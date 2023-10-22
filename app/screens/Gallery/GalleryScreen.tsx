@@ -1,5 +1,11 @@
-/* eslint-disable prettier/prettier */
-import { Text, SafeAreaView, StyleSheet, Dimensions, View, Image, FlatList } from 'react-native';
+import {
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  Dimensions,
+  View,
+  FlatList,
+} from 'react-native';
 import React from 'react';
 import { Artwork } from '../../services/types/artworks.types';
 import { useGetArtworksQuery } from '../../services/artCatalog';
@@ -8,15 +14,19 @@ import ProgressiveImage from '../components/ProgresiveImage';
 
 const GalleryScreen = () => {
   const { data: artworks, isLoading, isError, error } = useGetArtworksQuery();
-  if (isLoading) { return <Text>Loading...</Text>; }
-  if (isError) { return <Text>{JSON.stringify(error)}</Text>; }
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
+  if (isError) {
+    return <Text>{JSON.stringify(error)}</Text>;
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
         data={artworks}
         renderItem={({ item }) => <ArtworkCard {...item} />}
-        keyExtractor={(item) => item.title}
+        keyExtractor={item => item.title}
       />
     </SafeAreaView>
   );
@@ -47,8 +57,8 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 8,
     backgroundColor: '#f7f7f7',
-    elevation: 2,  // for Android shadow
-    shadowColor: '#000',  // for iOS shadow
+    elevation: 2, // for Android shadow
+    shadowColor: '#000', // for iOS shadow
     shadowOffset: {
       width: 0,
       height: 2,

@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unstable-nested-components */
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import GalleryScreen from './Gallery/GalleryScreen';
@@ -13,26 +12,27 @@ export default function MyTabs() {
       <Tab.Screen
         options={{
           tabBarShowLabel: false,
-          tabBarIcon: ({ size, focused }) => (
-            focused ?
-              <Icon name="picture" size={size} color="#FFD700" /> :
+          tabBarIcon: ({ size, focused }) =>
+            focused ? (
+              <Icon name="picture" size={size} color="#FFD700" />
+            ) : (
               <Icon name="picture" size={size} />
-          ),
+            ),
         }}
         name="Gallery"
-        component={GalleryScreen} />
+        component={GalleryScreen}
+      />
       <Tab.Screen
         name="Favorites"
         component={FavoritesScreen}
         options={{
           tabBarShowLabel: false,
-          tabBarIcon: ({ size, focused }) => (
-            focused ?
+          tabBarIcon: ({ size, focused }) =>
+            focused ? (
               <Icon name="star" size={size} color="#FFD700" />
-
-              : <Icon name="staro" size={size} />
-
-          ),
+            ) : (
+              <Icon name="staro" size={size} />
+            ),
         }}
       />
     </Tab.Navigator>

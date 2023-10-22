@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import { Image, ImageStyle } from 'react-native';
 
