@@ -5,7 +5,7 @@ import React from 'react';
 const FavoritesScreen = () => {
   return (
     <SafeAreaView>
-      <Text>ArtworkScreen</Text>
+      <Text>Bookmarked pieces</Text>
     </SafeAreaView>
   );
 };

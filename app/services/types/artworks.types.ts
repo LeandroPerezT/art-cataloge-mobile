@@ -12,6 +12,7 @@ export type Artwork = {
     height: number;
     alt_text: string;
   };
+  image_id: string;
 };
 
 // This is an attempt to type the response of the Art Catalog API
@@ -194,5 +195,6 @@ export const transformResponseToArtwork = (response: Data): Artwork => {
       height: response.thumbnail.height,
       alt_text: response.thumbnail.alt_text,
     },
+    image_id: response.image_id,
   };
 };

@@ -4,6 +4,8 @@ import React from 'react';
 import { Artwork } from '../../services/types/artworks.types';
 import { useGetArtworksQuery } from '../../services/artCatalog';
 
+import ProgressiveImage from '../components/ProgresiveImage';
+
 const GalleryScreen = () => {
   const { data: artworks, isLoading, isError, error } = useGetArtworksQuery();
   if (isLoading) { return <Text>Loading...</Text>; }
@@ -21,10 +23,13 @@ const GalleryScreen = () => {
 };
 
 const ArtworkCard = (props: Artwork) => {
-
   return (
     <View style={styles.card}>
-      <Image source={{ uri: props.thumbnail.lqip }} style={styles.thumbnail} />
+      <ProgressiveImage
+        lowResUrl={props.thumbnail.lqip}
+        highResUrl={`https://www.artic.edu/iiif/2/${props.image_id}/full/1686,/0/default.jpg`}
+        style={styles.thumbnail}
+      />
       <Text style={styles.title}>{props.title}</Text>
       <Text style={styles.author}>{props.artist_display}</Text>
     </View>
