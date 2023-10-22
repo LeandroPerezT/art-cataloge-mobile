@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GalleryStackParams } from './GalleryStack';
@@ -6,17 +6,18 @@ import { useGetArtworkByIdQuery } from '../../services/artCatalog';
 import { composeImageUrl } from '../../utils/utils';
 import RenderHtml from 'react-native-render-html';
 import { useWindowDimensions } from 'react-native';
+import ProgressiveImage from '../components/ProgresiveImage';
 
 type ArtworkScreenProps = NativeStackScreenProps<GalleryStackParams, 'Artwork'>;
-
 const ArtworkScreen = ({ route }: ArtworkScreenProps) => {
+  const { artworkId } = route.params;
   const { width } = useWindowDimensions();
   const {
     data: artwork,
     isLoading,
     isError,
     error,
-  } = useGetArtworkByIdQuery(route.params.artworkId);
+  } = useGetArtworkByIdQuery(artworkId);
 
   if (isLoading) {
     return <Text>Loading...</Text>;
@@ -30,10 +31,13 @@ const ArtworkScreen = ({ route }: ArtworkScreenProps) => {
     html: artwork.description,
   };
 
+  console.log('ArtworkScreen => ', artworkId);
+
   return (
     <ScrollView style={styles.container}>
-      <Image
-        source={{ uri: composeImageUrl(artwork ? artwork.image_id : '') }}
+      <ProgressiveImage
+        lowResUrl={artwork.thumbnail.lqip}
+        highResUrl={composeImageUrl(artwork.image_id)}
         style={styles.image}
       />
 

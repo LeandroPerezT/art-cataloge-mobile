@@ -14,20 +14,23 @@ import ProgressiveImage from '../components/ProgresiveImage';
 import ArtSkeleton from './components/ArtSkeleton';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GalleryStackParams } from './GalleryStack';
+import { composeImageUrl } from '../../utils/utils';
 
-type GalleryScreenProps = NativeStackScreenProps<GalleryStackParams, 'Gallery'>;
+type GalleryScreenProps = NativeStackScreenProps<GalleryStackParams, 'Home'>;
 
 const GalleryScreen = ({ navigation }: GalleryScreenProps) => {
   const { data: artworks, isLoading, isError, error } = useGetArtworksQuery();
+
   if (isLoading) {
     return <ArtSkeleton quantity={5} />;
   }
-  if (isError) {
+  if (isError && !!artworks) {
     return <Text>{JSON.stringify(error)}</Text>;
   }
 
   return (
     <SafeAreaView style={styles.container}>
+      <Text style={styles.screenTitle}>Art Gallery</Text>
       <FlatList
         data={artworks}
         renderItem={({ item }) => (
@@ -55,7 +58,7 @@ const ArtworkCard = (props: ArtworkCardProps) => {
         }>
         <ProgressiveImage
           lowResUrl={props.thumbnail.lqip}
-          highResUrl={`https://www.artic.edu/iiif/2/${props.image_id}/full/1686,/0/default.jpg`}
+          highResUrl={composeImageUrl(props.image_id)}
           style={styles.thumbnail}
         />
         <Text style={styles.title}>{props.title}</Text>
@@ -69,6 +72,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 16,
     backgroundColor: '#fff',
+  },
+  screenTitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 10,
   },
   card: {
     width: '100%',

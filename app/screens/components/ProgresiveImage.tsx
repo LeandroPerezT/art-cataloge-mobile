@@ -1,34 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ForwardedRef } from 'react';
 import { Image, ImageStyle } from 'react-native';
 
 interface ProgressiveImageProps {
   lowResUrl: string;
   highResUrl: string;
   style?: ImageStyle;
+  isTransitioning?: boolean;
 }
 
-const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
-  lowResUrl,
-  highResUrl,
-  style,
-}) => {
-  const [imageUrl, setImageUrl] = useState<string>(lowResUrl);
+const ProgressiveImage = React.forwardRef(
+  (props: ProgressiveImageProps, ref: ForwardedRef<Image>) => {
+    const { lowResUrl, highResUrl, style, isTransitioning } = props;
+    const [imageUrl, setImageUrl] = useState<string>(lowResUrl);
 
-  useEffect(() => {
-    // Fetch high-res image and update state when it's loaded
-    Image.prefetch(highResUrl).then(() => {
-      setImageUrl(highResUrl);
-    });
-  }, [highResUrl]);
+    useEffect(() => {
+      if (!isTransitioning) {
+        // Only prefetch and set the high-res image if not transitioning
+        Image.prefetch(highResUrl).then(() => {
+          setImageUrl(highResUrl);
+        });
+      }
+    }, [highResUrl, isTransitioning]);
 
-  return (
-    <Image
-      source={{
-        uri: imageUrl,
-      }}
-      style={[{ width: '100%', height: 300 }, style]}
-    />
-  );
-};
+    return (
+      <Image
+        ref={ref}
+        source={{ uri: imageUrl }}
+        style={[{ width: '100%', height: 300 }, style]}
+      />
+    );
+  },
+);
 
 export default ProgressiveImage;

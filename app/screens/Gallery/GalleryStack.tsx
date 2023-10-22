@@ -4,7 +4,7 @@ import GalleryScreen from './GalleryScreen';
 import ArtworkScreen from './ArtworkScreen';
 
 export type GalleryStackParams = {
-  Gallery: undefined;
+  Home: undefined;
   Artwork: { artworkId: number };
 };
 
@@ -16,7 +16,7 @@ const GalleryStack = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Gallery" component={GalleryScreen} />
+      <Stack.Screen name="Home" component={GalleryScreen} />
       <Stack.Screen name="Artwork" component={ArtworkScreen} />
     </Stack.Navigator>
   );
