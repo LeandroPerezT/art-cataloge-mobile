@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Artwork, ArtworkResponse, transformResponseToArtwork } from '../types/artworks.types';
+import { Artwork, ArtworkResponse, transformResponseToArtwork } from './types/artworks.types';
 
 
 export const artCatalogApi = createApi({

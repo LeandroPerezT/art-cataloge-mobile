@@ -14,6 +14,7 @@ export type Artwork = {
   };
 };
 
+// This is an attempt to type the response of the Art Catalog API
 export type ArtworkResponse = {
   pagination: Pagination;
   data: Data[];
