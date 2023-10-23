@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 8,
+    width: '80%',
   },
   artist: {
     fontSize: 16,
