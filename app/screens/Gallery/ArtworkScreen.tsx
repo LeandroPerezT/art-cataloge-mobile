@@ -1,11 +1,13 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import React from 'react';
+import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
+import React, { useState } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GalleryStackParams } from './GalleryStack';
 import { composeImageUrl } from '../../utils/utils';
 import RenderHtml from 'react-native-render-html';
 import { useWindowDimensions } from 'react-native';
 import ProgressiveImage from '../components/ProgresiveImage';
+import Icon from 'react-native-vector-icons/AntDesign';
+
 import Animated from 'react-native-reanimated';
 
 const AnimatedProgressiveImage =
@@ -14,7 +16,7 @@ const AnimatedProgressiveImage =
 type ArtworkScreenProps = NativeStackScreenProps<GalleryStackParams, 'Artwork'>;
 const ArtworkScreen = ({ route }: ArtworkScreenProps) => {
   const { width } = useWindowDimensions();
-
+  const [bookmarked, setIsBookmarked] = useState(true);
   const { ...artwork } = route.params;
   const source = {
     html: artwork.description,
@@ -28,9 +30,17 @@ const ArtworkScreen = ({ route }: ArtworkScreenProps) => {
         style={styles.image}
         sharedTransitionTag={`image-${artwork.id}`}
       />
-
       <View style={styles.detailsContainer}>
-        <Text style={styles.title}>{artwork.title}</Text>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>{artwork.title}</Text>
+          <Pressable onPress={() => setIsBookmarked(bk => !bk)}>
+            <Icon
+              name={bookmarked ? 'star' : 'staro'}
+              color="#FFD700"
+              size={40}
+            />
+          </Pressable>
+        </View>
         <Text style={styles.artist}>{artwork.artist_display}</Text>
         {artwork.description ? (
           <RenderHtml contentWidth={width} source={source} />
@@ -54,6 +64,12 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     padding: 16,
+    marginHorizontal: 10,
+  },
+  titleContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   title: {
     fontSize: 24,
