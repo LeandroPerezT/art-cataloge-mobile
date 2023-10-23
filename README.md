@@ -11,20 +11,20 @@ Discover and explore the captivating collection of artworks from the Art Institu
 
 Clone the repository:
 
-`bash
+` 
 git clone [Repository URL]
 cd ArtCatalog
 `
 
 Install dependencies:
 
-`bash
+` 
 npm install
 `
 
 or if you're using yarn:
 
-`bash
+` 
 yarn install
 `
 
@@ -36,7 +36,7 @@ yarn install
 
    Navigate to the `ios` directory and install the necessary pods:
 
-   `bash
+   ` 
    cd ios && pod install
    `
 
@@ -44,7 +44,7 @@ yarn install
 
    Start the app on the iOS simulator with:
 
-   `bash
+   ` 
    react-native run-ios
    `
 
