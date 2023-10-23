@@ -7,7 +7,7 @@ import {
   FlatList,
   Pressable,
 } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Artwork } from '../../services/types/artworks.types';
 import { useGetArtworksQuery } from '../../services/artCatalog';
 import ProgressiveImage from '../components/ProgresiveImage';
@@ -16,14 +16,34 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GalleryStackParams } from './GalleryStack';
 import { composeImageUrl } from '../../utils/utils';
 import Animated from 'react-native-reanimated';
-
+import { mergeWithoutDuplicates } from '../../utils/utils';
 type GalleryScreenProps = NativeStackScreenProps<GalleryStackParams, 'Home'>;
 
 const AnimatedProgressiveImage =
   Animated.createAnimatedComponent(ProgressiveImage);
 
+const FIRST_PAGE = 1;
+const PAGE_SIZE = 10;
+
 const GalleryScreen = ({ navigation }: GalleryScreenProps) => {
-  const { data: artworks, isLoading, isError, error } = useGetArtworksQuery();
+  const [page, setPage] = useState(FIRST_PAGE);
+  const [artworks, setArtworks] = useState<Artwork[]>([]);
+  const { data, isLoading, isError, isFetching, error } = useGetArtworksQuery({
+    limit: PAGE_SIZE,
+    page: page,
+  });
+
+  useEffect(() => {
+    if (data && data.length > 0) {
+      setArtworks(prev => mergeWithoutDuplicates(prev, data, 'id'));
+    }
+  }, [data]);
+
+  const handleEndReached = () => {
+    if (!isFetching) {
+      setPage(prev => prev + 1);
+    }
+  };
   if (isLoading) {
     return <ArtSkeleton quantity={5} />;
   }
@@ -39,7 +59,10 @@ const GalleryScreen = ({ navigation }: GalleryScreenProps) => {
         renderItem={({ item }) => (
           <ArtworkCard {...item} navigation={navigation} />
         )}
-        keyExtractor={item => item.title}
+        keyExtractor={item => `${item.id}-${item.title}`}
+        onEndReached={handleEndReached}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={isLoading ? <ArtSkeleton quantity={5} /> : null}
       />
     </SafeAreaView>
   );

@@ -7,7 +7,11 @@ import RenderHtml from 'react-native-render-html';
 import { useWindowDimensions } from 'react-native';
 import ProgressiveImage from '../components/ProgresiveImage';
 import Icon from 'react-native-vector-icons/AntDesign';
-import storage from '../../utils/storage';
+import storage, {
+  addBookmark,
+  checkIfBookmarked,
+  removeBookmark,
+} from '../../utils/storage';
 import { useMMKVStorage } from 'react-native-mmkv-storage';
 
 import Animated from 'react-native-reanimated';
@@ -28,20 +32,7 @@ const ArtworkScreen = ({ route }: ArtworkScreenProps) => {
     [],
   );
 
-  const addBookmark = (bookmarkId: number) => {
-    const newBookmarks = [...bookmarks, bookmarkId];
-    setBookmarks(newBookmarks);
-  };
-
-  const removeBookmark = (bookmarkId: number) => {
-    const newBookmarks = bookmarks.filter(id => id !== bookmarkId);
-    setBookmarks(newBookmarks);
-  };
-
-  const checkIfBookmarked = (bookmarkId: number) =>
-    bookmarks.includes(bookmarkId);
-
-  const isBookmarked = checkIfBookmarked(artwork.id);
+  const isBookmarked = checkIfBookmarked(bookmarks, artwork.id);
 
   if (!artwork.image_id) {
     return null;
@@ -60,8 +51,8 @@ const ArtworkScreen = ({ route }: ArtworkScreenProps) => {
           <Pressable
             onPress={() => {
               isBookmarked
-                ? removeBookmark(artwork.id)
-                : addBookmark(artwork.id);
+                ? removeBookmark(bookmarks, setBookmarks, artwork.id)
+                : addBookmark(bookmarks, setBookmarks, artwork.id);
             }}>
             <Icon
               name={isBookmarked ? 'star' : 'staro'}

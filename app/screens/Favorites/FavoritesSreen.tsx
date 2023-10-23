@@ -1,8 +1,8 @@
 import { FlatList, Image, Pressable, Text, View } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import storage from '../../utils/storage';
 import { useMMKVStorage } from 'react-native-mmkv-storage';
-import { useGetArtworksQuery } from '../../services/artCatalog';
+import { useGetArtworksByIdQuery } from '../../services/artCatalog';
 import { StyleSheet } from 'react-native';
 import { Artwork } from '../../services/types/artworks.types';
 import { composeImageUrl } from '../../utils/utils';
@@ -24,15 +24,23 @@ const FavoritesScreen = ({ navigation }: FavoritesScreenProps) => {
     isLoading,
     isError,
     error,
-  } = useGetArtworksQuery({
-    ids: bookmarks.join(','),
-  });
+    refetch,
+  } = useGetArtworksByIdQuery(bookmarks.join(','));
+
+  useEffect(() => {
+    refetch();
+  }, [bookmarks, refetch]);
 
   if (isLoading) {
     return <BookmarkSkeleton quantity={10} />;
   }
 
   if (isError && !bookmarkedArt) {
+    if (bookmarks.length === 0) {
+      return (
+        <Text style={styles.emptyTitle}>You don't have any bookmarks!</Text>
+      );
+    }
     return <Text>{JSON.stringify(error)}</Text>;
   }
 
@@ -71,10 +79,15 @@ const ArtPieceItem: React.FC<BookmarkType> = ({
 }) => {
   return (
     <Pressable onPress={() => onPress()} style={styles.itemContainer}>
-      <Image
-        source={{ uri: composeImageUrl(image_id) }}
-        style={styles.thumbnail}
-      />
+      {image_id ? (
+        <Image
+          source={{ uri: composeImageUrl(image_id) }}
+          style={styles.thumbnail}
+        />
+      ) : (
+        <Text>No image</Text>
+      )}
+
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{artist_display}</Text>
@@ -106,6 +119,12 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 14,
+  },
+  emptyTitle: {
+    fontSize: 30,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    marginTop: 10,
   },
 });
 

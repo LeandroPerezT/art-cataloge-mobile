@@ -30,7 +30,13 @@ export const artCatalogApi = createApi({
       },
       providesTags: ['Artwork'],
     }),
+    getArtworksById: builder.query<Artwork[], string>({
+      query: ids => `artworks?ids=${ids}`,
+      transformResponse: (response: ArtworkResponse) => {
+        return response.data.map(item => transformResponseToArtwork(item));
+      },
+    }),
   }),
 });
 
-export const { useGetArtworksQuery } = artCatalogApi;
+export const { useGetArtworksQuery, useGetArtworksByIdQuery } = artCatalogApi;
