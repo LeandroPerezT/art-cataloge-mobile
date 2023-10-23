@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GalleryStackParams } from './GalleryStack';
 import { composeImageUrl } from '../../utils/utils';
@@ -7,6 +7,8 @@ import RenderHtml from 'react-native-render-html';
 import { useWindowDimensions } from 'react-native';
 import ProgressiveImage from '../components/ProgresiveImage';
 import Icon from 'react-native-vector-icons/AntDesign';
+import storage from '../../utils/storage';
+import { useMMKVStorage } from 'react-native-mmkv-storage';
 
 import Animated from 'react-native-reanimated';
 
@@ -16,12 +18,30 @@ const AnimatedProgressiveImage =
 type ArtworkScreenProps = NativeStackScreenProps<GalleryStackParams, 'Artwork'>;
 const ArtworkScreen = ({ route }: ArtworkScreenProps) => {
   const { width } = useWindowDimensions();
-  const [bookmarked, setIsBookmarked] = useState(true);
   const { ...artwork } = route.params;
   const source = {
     html: artwork.description,
   };
+  const [bookmarks, setBookmarks] = useMMKVStorage<number[]>(
+    'bookmarks',
+    storage,
+    [],
+  );
 
+  const addBookmark = (bookmarkId: number) => {
+    const newBookmarks = [...bookmarks, bookmarkId];
+    setBookmarks(newBookmarks);
+  };
+
+  const removeBookmark = (bookmarkId: number) => {
+    const newBookmarks = bookmarks.filter(id => id !== bookmarkId);
+    setBookmarks(newBookmarks);
+  };
+
+  const checkIfBookmarked = (bookmarkId: number) =>
+    bookmarks.includes(bookmarkId);
+
+  const isBookmarked = checkIfBookmarked(artwork.id);
   return (
     <ScrollView style={styles.container}>
       <AnimatedProgressiveImage
@@ -33,9 +53,14 @@ const ArtworkScreen = ({ route }: ArtworkScreenProps) => {
       <View style={styles.detailsContainer}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{artwork.title}</Text>
-          <Pressable onPress={() => setIsBookmarked(bk => !bk)}>
+          <Pressable
+            onPress={() => {
+              isBookmarked
+                ? removeBookmark(artwork.id)
+                : addBookmark(artwork.id);
+            }}>
             <Icon
-              name={bookmarked ? 'star' : 'staro'}
+              name={isBookmarked ? 'star' : 'staro'}
               color="#FFD700"
               size={40}
             />

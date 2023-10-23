@@ -24,7 +24,6 @@ const AnimatedProgressiveImage =
 
 const GalleryScreen = ({ navigation }: GalleryScreenProps) => {
   const { data: artworks, isLoading, isError, error } = useGetArtworksQuery();
-
   if (isLoading) {
     return <ArtSkeleton quantity={5} />;
   }
