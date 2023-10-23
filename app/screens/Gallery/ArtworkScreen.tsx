@@ -42,6 +42,10 @@ const ArtworkScreen = ({ route }: ArtworkScreenProps) => {
     bookmarks.includes(bookmarkId);
 
   const isBookmarked = checkIfBookmarked(artwork.id);
+
+  if (!artwork.image_id) {
+    return null;
+  }
   return (
     <ScrollView style={styles.container}>
       <AnimatedProgressiveImage

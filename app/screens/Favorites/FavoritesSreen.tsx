@@ -44,7 +44,7 @@ const FavoritesScreen = ({ navigation }: FavoritesScreenProps) => {
         <ArtPieceItem
           title={item.title}
           artist_display={item.artist_display}
-          image_id={item.image_id}
+          image_id={item?.image_id}
           onPress={() =>
             navigation.navigate('Gallery', {
               screen: 'Artwork',

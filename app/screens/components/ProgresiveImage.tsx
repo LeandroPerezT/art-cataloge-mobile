@@ -14,10 +14,14 @@ const ProgressiveImage = React.forwardRef(
 
     useEffect(() => {
       // Fetch high-res image and update state when it's loaded
-      Image.prefetch(highResUrl).then(() => {
-        setImageUrl(highResUrl);
-      });
-    }, [highResUrl]);
+      Image.prefetch(highResUrl)
+        .then(() => {
+          setImageUrl(highResUrl);
+        })
+        .catch(() => {
+          setImageUrl(lowResUrl);
+        });
+    }, [highResUrl, lowResUrl]);
 
     return (
       <Image

@@ -50,19 +50,23 @@ type ArtworkCardProps = Artwork & {
 };
 
 const ArtworkCard = (props: ArtworkCardProps) => {
-  const { navigation, ...rest } = props;
+  const { navigation, image_id, ...rest } = props;
 
+  if (!image_id) {
+    return null;
+  }
   return (
     <View style={styles.card}>
       <Pressable
         onPress={() =>
           navigation.navigate('Artwork', {
+            image_id,
             ...rest,
           })
         }>
         <AnimatedProgressiveImage
           lowResUrl={props.thumbnail.lqip}
-          highResUrl={composeImageUrl(props.image_id)}
+          highResUrl={composeImageUrl(image_id)}
           style={styles.thumbnail}
           sharedTransitionTag={`image-${props.id}`}
         />
