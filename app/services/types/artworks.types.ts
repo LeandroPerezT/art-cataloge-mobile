@@ -180,12 +180,6 @@ export interface Pagination {
   next_url: string;
 }
 
-export type ArtworkByIDResponse = {
-  data: Data;
-  info: Info;
-  config: Config;
-};
-
 export const transformResponseToArtwork = (response: Data): Artwork => {
   return {
     id: response.id,

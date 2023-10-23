@@ -48,12 +48,13 @@ type ArtworkCardProps = Artwork & {
 
 const ArtworkCard = (props: ArtworkCardProps) => {
   const { navigation } = props;
+
   return (
     <View style={styles.card}>
       <Pressable
         onPress={() =>
           navigation.navigate('Artwork', {
-            artworkId: props.id,
+            ...props,
           })
         }>
         <ProgressiveImage

@@ -2,10 +2,11 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import GalleryScreen from './GalleryScreen';
 import ArtworkScreen from './ArtworkScreen';
+import { Artwork } from '../../services/types/artworks.types';
 
 export type GalleryStackParams = {
   Home: undefined;
-  Artwork: { artworkId: number };
+  Artwork: Artwork;
 };
 
 const Stack = createNativeStackNavigator<GalleryStackParams>();

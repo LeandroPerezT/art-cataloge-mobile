@@ -2,7 +2,6 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GalleryStackParams } from './GalleryStack';
-import { useGetArtworkByIdQuery } from '../../services/artCatalog';
 import { composeImageUrl } from '../../utils/utils';
 import RenderHtml from 'react-native-render-html';
 import { useWindowDimensions } from 'react-native';
@@ -10,28 +9,12 @@ import ProgressiveImage from '../components/ProgresiveImage';
 
 type ArtworkScreenProps = NativeStackScreenProps<GalleryStackParams, 'Artwork'>;
 const ArtworkScreen = ({ route }: ArtworkScreenProps) => {
-  const { artworkId } = route.params;
   const { width } = useWindowDimensions();
-  const {
-    data: artwork,
-    isLoading,
-    isError,
-    error,
-  } = useGetArtworkByIdQuery(artworkId);
 
-  if (isLoading) {
-    return <Text>Loading...</Text>;
-  }
-
-  if (isError || !artwork) {
-    return <Text>{JSON.stringify(error)}</Text>;
-  }
-
+  const { ...artwork } = route.params;
   const source = {
     html: artwork.description,
   };
-
-  console.log('ArtworkScreen => ', artworkId);
 
   return (
     <ScrollView style={styles.container}>
@@ -42,9 +25,9 @@ const ArtworkScreen = ({ route }: ArtworkScreenProps) => {
       />
 
       <View style={styles.detailsContainer}>
-        <Text style={styles.title}>{artwork?.title}</Text>
-        <Text style={styles.artist}>{artwork?.artist_display}</Text>
-        {artwork?.description ? (
+        <Text style={styles.title}>{artwork.title}</Text>
+        <Text style={styles.artist}>{artwork.artist_display}</Text>
+        {artwork.description ? (
           <RenderHtml contentWidth={width} source={source} />
         ) : (
           <Text>Sorry, the piece does not have a description available...</Text>
