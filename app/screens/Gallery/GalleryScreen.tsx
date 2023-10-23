@@ -15,8 +15,12 @@ import ArtSkeleton from './components/ArtSkeleton';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GalleryStackParams } from './GalleryStack';
 import { composeImageUrl } from '../../utils/utils';
+import Animated from 'react-native-reanimated';
 
 type GalleryScreenProps = NativeStackScreenProps<GalleryStackParams, 'Home'>;
+
+const AnimatedProgressiveImage =
+  Animated.createAnimatedComponent(ProgressiveImage);
 
 const GalleryScreen = ({ navigation }: GalleryScreenProps) => {
   const { data: artworks, isLoading, isError, error } = useGetArtworksQuery();
@@ -57,10 +61,11 @@ const ArtworkCard = (props: ArtworkCardProps) => {
             ...rest,
           })
         }>
-        <ProgressiveImage
+        <AnimatedProgressiveImage
           lowResUrl={props.thumbnail.lqip}
           highResUrl={composeImageUrl(props.image_id)}
           style={styles.thumbnail}
+          sharedTransitionTag={`image-${props.id}`}
         />
         <Text style={styles.title}>{props.title}</Text>
         <Text style={styles.author}>{props.artist_display}</Text>

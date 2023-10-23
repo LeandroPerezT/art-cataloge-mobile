@@ -5,22 +5,19 @@ interface ProgressiveImageProps {
   lowResUrl: string;
   highResUrl: string;
   style?: ImageStyle;
-  isTransitioning?: boolean;
 }
 
 const ProgressiveImage = React.forwardRef(
   (props: ProgressiveImageProps, ref: ForwardedRef<Image>) => {
-    const { lowResUrl, highResUrl, style, isTransitioning } = props;
+    const { lowResUrl, highResUrl, style } = props;
     const [imageUrl, setImageUrl] = useState<string>(lowResUrl);
 
     useEffect(() => {
-      if (!isTransitioning) {
-        // Only prefetch and set the high-res image if not transitioning
-        Image.prefetch(highResUrl).then(() => {
-          setImageUrl(highResUrl);
-        });
-      }
-    }, [highResUrl, isTransitioning]);
+      // Fetch high-res image and update state when it's loaded
+      Image.prefetch(highResUrl).then(() => {
+        setImageUrl(highResUrl);
+      });
+    }, [highResUrl]);
 
     return (
       <Image

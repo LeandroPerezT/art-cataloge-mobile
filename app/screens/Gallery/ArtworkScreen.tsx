@@ -6,6 +6,10 @@ import { composeImageUrl } from '../../utils/utils';
 import RenderHtml from 'react-native-render-html';
 import { useWindowDimensions } from 'react-native';
 import ProgressiveImage from '../components/ProgresiveImage';
+import Animated from 'react-native-reanimated';
+
+const AnimatedProgressiveImage =
+  Animated.createAnimatedComponent(ProgressiveImage);
 
 type ArtworkScreenProps = NativeStackScreenProps<GalleryStackParams, 'Artwork'>;
 const ArtworkScreen = ({ route }: ArtworkScreenProps) => {
@@ -18,10 +22,11 @@ const ArtworkScreen = ({ route }: ArtworkScreenProps) => {
 
   return (
     <ScrollView style={styles.container}>
-      <ProgressiveImage
+      <AnimatedProgressiveImage
         lowResUrl={artwork.thumbnail.lqip}
         highResUrl={composeImageUrl(artwork.image_id)}
         style={styles.image}
+        sharedTransitionTag={`image-${artwork.id}`}
       />
 
       <View style={styles.detailsContainer}>
