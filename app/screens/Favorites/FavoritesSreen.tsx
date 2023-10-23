@@ -35,12 +35,11 @@ const FavoritesScreen = ({ navigation }: FavoritesScreenProps) => {
     return <BookmarkSkeleton quantity={10} />;
   }
 
+  if (bookmarks.length === 0) {
+    return <Text style={styles.emptyTitle}>You don't have any bookmarks!</Text>;
+  }
+
   if (isError && !bookmarkedArt) {
-    if (bookmarks.length === 0) {
-      return (
-        <Text style={styles.emptyTitle}>You don't have any bookmarks!</Text>
-      );
-    }
     return <Text>{JSON.stringify(error)}</Text>;
   }
 
