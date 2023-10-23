@@ -11,22 +11,22 @@ Discover and explore the captivating collection of artworks from the Art Institu
 
 Clone the repository:
 
-\```bash
+`bash
 git clone [Repository URL]
 cd ArtCatalog
-\```
+`
 
 Install dependencies:
 
-\```bash
+`bash
 npm install
-\```
+`
 
 or if you're using yarn:
 
-\```bash
+`bash
 yarn install
-\```
+`
 
 ### iOS Setup
 
@@ -36,17 +36,17 @@ yarn install
 
    Navigate to the `ios` directory and install the necessary pods:
 
-   \```bash
+   `bash
    cd ios && pod install
-   \```
+   `
 
 2. **Running on a Simulator**
 
    Start the app on the iOS simulator with:
 
-   \```bash
+   `bash
    react-native run-ios
-   \```
+   `
 
    Specify a particular simulator by adding the `--simulator` flag followed by the simulator's name, e.g., `--simulator="iPhone 11"`.
 
