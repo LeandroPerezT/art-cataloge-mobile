@@ -1,79 +1,69 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Art Catalog
 
-# Getting Started
+Discover and explore the captivating collection of artworks from the Art Institute of Chicago. Browse through the extensive catalog and bookmark your favorite masterpieces for easy access.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Prerequisites
 
-## Step 1: Start the Metro Server
+- Node.js and npm/yarn
+- Xcode (for iOS development)
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## Installation & Setup
 
-To start Metro, run the following command from the _root_ of your React Native project:
+Clone the repository:
 
-```bash
-# using npm
-npm start
+\`bash
+git clone [Repository URL]
+cd ArtCatalog
+\`
 
-# OR using Yarn
-yarn start
-```
+Install dependencies:
 
-## Step 2: Start your Application
+\`bash
+npm install
+\`
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+or if you're using yarn:
 
-### For Android
+\`bash
+yarn install
+\`
 
-```bash
-# using npm
-npm run android
+### iOS Setup
 
-# OR using Yarn
-yarn android
-```
+📣 Please note: This MVP currently supports only iOS. Android coverage will be addressed in future updates.
 
-### For iOS
+1. **Install Pods**
 
-```bash
-# using npm
-npm run ios
+   Navigate to the `ios` directory and install the necessary pods:
 
-# OR using Yarn
-yarn ios
-```
+   \`bash
+   cd ios && pod install
+   \`
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+2. **Running on a Simulator**
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+   Start the app on the iOS simulator with:
 
-## Step 3: Modifying your App
+   \`bash
+   react-native run-ios
+   \`
 
-Now that you have successfully run the app, let's modify it.
+   Specify a particular simulator by adding the `--simulator` flag followed by the simulator's name, e.g., `--simulator="iPhone 11"`.
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+3. **Running on a Physical Device**
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+   To launch on a physical device:
+   - Open the `.xcworkspace` file within the `ios` directory using Xcode.
+   - Connect your iOS device and select it as the target.
+   - Hit the play button or `Cmd + R` to build and run the app on your device.
 
-## Congratulations! :tada:
+## Features
 
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- 🎨 Seamlessly integrated with the **Art Institute of Chicago API** to fetch intricate details of artworks.
+- ⚙️ Employs **RTK Query** for streamlined API calls, reducing redundancy and enhancing performance.
+- 📌 Leverages **MMKV storage** for efficient bookmark management, allowing you to save and revisit your cherished artworks.
+- 🖼️ Enhanced **progressive image rendering** for a fluid and visually pleasing user experience.
+- 💀 Engaging **skeleton loading** indicators during data fetches, assuring users of background activity.
+- 📖 A dedicated **bookmarks screen** to help you manage and view your saved pieces effortlessly.
+- 🌌 Experience the magic of **shared element transition** using Reanimated, making transitions between the gallery list and Artwork detail screen seamless and engaging.
+- 🌐 Comprehensive navigation and routing powered by **React Navigation** for an intuitive user journey.
