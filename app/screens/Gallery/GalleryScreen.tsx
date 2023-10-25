@@ -62,7 +62,7 @@ const GalleryScreen = ({ navigation }: GalleryScreenProps) => {
         keyExtractor={item => `${item.id}-${item.title}`}
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.5}
-        ListFooterComponent={isLoading ? <ArtSkeleton quantity={5} /> : null}
+        ListFooterComponent={isFetching ? <ArtSkeleton quantity={5} /> : null}
       />
     </SafeAreaView>
   );
